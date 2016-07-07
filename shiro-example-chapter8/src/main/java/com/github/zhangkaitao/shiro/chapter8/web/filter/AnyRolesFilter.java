@@ -1,5 +1,7 @@
 package com.github.zhangkaitao.shiro.chapter8.web.filter;
 
+import java.util.Arrays;
+
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.StringUtils;
 import org.apache.shiro.web.filter.AccessControlFilter;
@@ -22,6 +24,7 @@ public class AnyRolesFilter extends AccessControlFilter {
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws Exception {
         String[] roles = (String[])mappedValue;
+        System.out.println("roles" + Arrays.toString(roles));
         if(roles == null) {
             return true;//如果没有设置角色参数，默认成功
         }
@@ -29,6 +32,7 @@ public class AnyRolesFilter extends AccessControlFilter {
             if(getSubject(request, response).hasRole(role)) {
                 return true;
             }
+            System.out.println("has not role:" + role);
         }
         return false;//跳到onAccessDenied处理
     }
